@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JavaScript 基础知识练习</title>
+  <style>
+    body {
+      font-family: "Microsoft YaHei", Arial, sans-serif;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+      background: #f5f7fa;
+      color: #333;
+    }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+      border-bottom: 3px solid #3498db;
+      padding-bottom: 10px;
+    }
+    h2 {
+      color: #2980b9;
+      margin-top: 30px;
+    }
+    .section {
+      background: #fff;
+      border-radius: 8px;
+      padding: 20px 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .output {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      border-radius: 6px;
+      padding: 14px 18px;
+      font-family: Consolas, monospace;
+      font-size: 14px;
+      white-space: pre-wrap;
+      min-height: 40px;
+      margin-top: 10px;
+    }
+    button {
+      background: #3498db;
+      color: #fff;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-top: 8px;
+      transition: background 0.2s;
+    }
+    button:hover { background: #217dbb; }
+    code {
+      background: #eef2f7;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: Consolas, monospace;
+      color: #c0392b;
+    }
+  </style>
+</head>
+<body>
+
+<h1>JavaScript 基础知识练习</h1>
+
+<!-- ===== 1. 变量的定义 ===== -->
+<div class="section">
+  <h2>1. 变量的定义</h2>
+  <p>JavaScript 中使用 <code>var</code>、<code>let</code>、<code>const</code> 定义变量。</p>
+  <button onclick="demo_variables()">运行演示</button>
+  <div class="output" id="out_variables"></div>
+</div>
+
+<!-- ===== 2. 变量类型 ===== -->
+<div class="section">
+  <h2>2. 变量类型</h2>
+  <p>基本类型：Number、String、Boolean、Null、Undefined；引用类型：Object、Array 等。</p>
+  <button onclick="demo_types()">运行演示</button>
+  <div class="output" id="out_types"></div>
+</div>
+
+<!-- ===== 3. 表达式 ===== -->
+<div class="section">
+  <h2>3. 表达式</h2>
+  <p>算术运算、比较运算、逻辑运算、字符串拼接等。</p>
+  <button onclick="demo_expressions()">运行演示</button>
+  <div class="output" id="out_expressions"></div>
+</div>
+
+<!-- ===== 4. 流程控制 ===== -->
+<div class="section">
+  <h2>4. 流程控制</h2>
+  <p>if/else、switch、for、while 等控制结构。</p>
+  <button onclick="demo_control()">运行演示</button>
+  <div class="output" id="out_control"></div>
+</div>
+
+<!-- ===== 5. 函数 ===== -->
+<div class="section">
+  <h2>5. 函数</h2>
+  <p>函数声明、函数表达式、箭头函数、参数与返回值。</p>
+  <button onclick="demo_functions()">运行演示</button>
+  <div class="output" id="out_functions"></div>
+</div>
+
+<script>
+  /* =========================================
+     工具：向指定区域输出内容
+  ========================================= */
+  function print(id, msg) {
+    var el = document.getElementById(id);
+    el.textContent += msg + "\n";
+  }
+  function clear(id) {
+    document.getElementById(id).textContent = "";
+  }
+
+  /* =========================================
+     1. 变量的定义
+  ========================================= */
+  function demo_variables() {
+    clear("out_variables");
+
+    // var —— 函数作用域，可重复声明，有变量提升
+    var name = "张三";
+    var name = "李四";  // 允许重复声明
+    print("out_variables", "var 重复声明：name = " + name);
+
+    // let —— 块级作用域，不可重复声明
+    let age = 20;
+    age = 21;           // 可重新赋值
+    print("out_variables", "let 变量：age = " + age);
+
+    // const —— 块级作用域，声明后不可重新赋值（对象内部属性可改）
+    const PI = 3.14159;
+    print("out_variables", "const 常量：PI = " + PI);
+
+    // 演示块级作用域
+    {
+      let blockVar = "我只在块内有效";
+      print("out_variables", "块内 blockVar = " + blockVar);
+    }
+    print("out_variables", "块外访问 blockVar：" +
+      (typeof blockVar === "undefined" ? "undefined（块外不可访问）" : blockVar));
+  }
+
+  /* =========================================
+     2. 变量类型
+  ========================================= */
+  function demo_types() {
+    clear("out_types");
+
+    var num     = 42;
+    var float   = 3.14;
+    var str     = "Hello, JavaScript!";
+    var bool    = true;
+    var nothing = null;
+    var undef;
+    var obj     = { key: "value", count: 100 };
+    var arr     = [1, 2, 3, "四", true];
+
+    print("out_types", "Number  : " + num + "  typeof → " + typeof num);
+    print("out_types", "Float   : " + float + " typeof → " + typeof float);
+    print("out_types", "String  : " + str + "  typeof → " + typeof str);
+    print("out_types", "Boolean : " + bool + "  typeof → " + typeof bool);
+    print("out_types", "Null    : " + nothing + "  typeof → " + typeof nothing + "  (历史遗留：typeof null === 'object')");
+    print("out_types", "Undefined: " + undef + "  typeof → " + typeof undef);
+    print("out_types", "Object  : " + JSON.stringify(obj) + "  typeof → " + typeof obj);
+    print("out_types", "Array   : " + JSON.stringify(arr) + "  Array.isArray → " + Array.isArray(arr));
+
+    // 类型转换
+    print("out_types", "\n--- 类型转换 ---");
+    print("out_types", "Number('123') = " + Number("123"));
+    print("out_types", "String(456)   = " + String(456));
+    print("out_types", "Boolean(0)    = " + Boolean(0));
+    print("out_types", "Boolean('')   = " + Boolean(""));
+    print("out_types", "Boolean(1)    = " + Boolean(1));
+  }
+
+  /* =========================================
+     3. 表达式
+  ========================================= */
+  function demo_expressions() {
+    clear("out_expressions");
+
+    // 算术运算
+    print("out_expressions", "--- 算术运算 ---");
+    print("out_expressions", "10 + 3 = " + (10 + 3));
+    print("out_expressions", "10 - 3 = " + (10 - 3));
+    print("out_expressions", "10 * 3 = " + (10 * 3));
+    print("out_expressions", "10 / 3 = " + (10 / 3).toFixed(4));
+    print("out_expressions", "10 % 3 = " + (10 % 3));
+    print("out_expressions", "2 ** 8 = " + (2 ** 8));
+
+    // 比较运算
+    print("out_expressions", "\n--- 比较运算 ---");
+    print("out_expressions", "5 == '5'  (宽松) → " + (5 == "5"));
+    print("out_expressions", "5 === '5' (严格) → " + (5 === "5"));
+    print("out_expressions", "5 !== 6          → " + (5 !== 6));
+    print("out_expressions", "10 > 3           → " + (10 > 3));
+
+    // 逻辑运算
+    print("out_expressions", "\n--- 逻辑运算 ---");
+    print("out_expressions", "true && false → " + (true && false));
+    print("out_expressions", "true || false → " + (true || false));
+    print("out_expressions", "!true         → " + (!true));
+
+    // 字符串拼接
+    print("out_expressions", "\n--- 字符串拼接 ---");
+    var firstName = "王";
+    var lastName  = "小明";
+    print("out_expressions", "姓 + 名 = " + (firstName + lastName));
+    print("out_expressions", "模板字符串: `你好，${firstName + lastName}！`  →  你好，" + (firstName + lastName) + "！");
+
+    // 三元运算符
+    print("out_expressions", "\n--- 三元运算符 ---");
+    var score = 75;
+    var grade = score >= 60 ? "及格" : "不及格";
+    print("out_expressions", "score=" + score + "，结果：" + grade);
+  }
+
+  /* =========================================
+     4. 流程控制
+  ========================================= */
+  function demo_control() {
+    clear("out_control");
+
+    // if / else if / else
+    print("out_control", "--- if / else if / else ---");
+    var temperature = 28;
+    if (temperature > 35) {
+      print("out_control", "天气：酷热");
+    } else if (temperature > 25) {
+      print("out_control", "天气：温暖（temperature = " + temperature + "）");
+    } else {
+      print("out_control", "天气：凉爽");
+    }
+
+    // switch
+    print("out_control", "\n--- switch ---");
+    var day = new Date().getDay();
+    var dayNames = ["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
+    switch (day) {
+      case 0:
+      case 6:
+        print("out_control", dayNames[day] + "：周末，放松一下！");
+        break;
+      default:
+        print("out_control", dayNames[day] + "：工作日，继续加油！");
+    }
+
+    // for 循环
+    print("out_control", "\n--- for 循环（累加 1~10）---");
+    var sum = 0;
+    for (var i = 1; i <= 10; i++) {
+      sum += i;
+    }
+    print("out_control", "1 + 2 + ... + 10 = " + sum);
+
+    // while 循环
+    print("out_control", "\n--- while 循环（找第一个大于 100 的 2 的幂）---");
+    var n = 1;
+    while (n <= 100) {
+      n *= 2;
+    }
+    print("out_control", "结果：" + n);
+
+    // for...of 遍历数组
+    print("out_control", "\n--- for...of 遍历数组 ---");
+    var fruits = ["苹果", "香蕉", "橙子", "葡萄"];
+    var line = "";
+    for (var fruit of fruits) {
+      line += fruit + " ";
+    }
+    print("out_control", line.trim());
+
+    // for...in 遍历对象
+    print("out_control", "\n--- for...in 遍历对象属性 ---");
+    var student = { name: "小红", age: 18, major: "计算机" };
+    for (var key in student) {
+      print("out_control", key + " : " + student[key]);
+    }
+  }
+
+  /* =========================================
+     5. 函数
+  ========================================= */
+  function demo_functions() {
+    clear("out_functions");
+
+    // 函数声明
+    print("out_functions", "--- 函数声明 ---");
+    function greet(name) {
+      return "你好，" + name + "！";
+    }
+    print("out_functions", greet("同学"));
+
+    // 函数表达式
+    print("out_functions", "\n--- 函数表达式 ---");
+    var square = function(x) {
+      return x * x;
+    };
+    print("out_functions", "square(7) = " + square(7));
+
+    // 箭头函数
+    print("out_functions", "\n--- 箭头函数 ---");
+    var add = (a, b) => a + b;
+    print("out_functions", "add(3, 5) = " + add(3, 5));
+
+    // 默认参数
+    print("out_functions", "\n--- 默认参数 ---");
+    function power(base, exp = 2) {
+      return Math.pow(base, exp);
+    }
+    print("out_functions", "power(4)    = " + power(4));      // 使用默认 exp=2
+    print("out_functions", "power(2, 10) = " + power(2, 10));
+
+    // 递归函数
+    print("out_functions", "\n--- 递归（阶乘）---");
+    function factorial(n) {
+      if (n <= 1) return 1;
+      return n * factorial(n - 1);
+    }
+    for (var k = 1; k <= 6; k++) {
+      print("out_functions", k + "! = " + factorial(k));
+    }
+
+    // 高阶函数
+    print("out_functions", "\n--- 高阶函数（Array.map / filter / reduce）---");
+    var nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    var doubled  = nums.map(x => x * 2);
+    var evens    = nums.filter(x => x % 2 === 0);
+    var total    = nums.reduce((acc, x) => acc + x, 0);
+    print("out_functions", "原数组   : " + nums.join(", "));
+    print("out_functions", "每项×2   : " + doubled.join(", "));
+    print("out_functions", "偶数     : " + evens.join(", "));
+    print("out_functions", "求和     : " + total);
+
+    // 闭包
+    print("out_functions", "\n--- 闭包 ---");
+    function makeCounter(start) {
+      var count = start || 0;
+      return function() {
+        count++;
+        return count;
+      };
+    }
+    var counter = makeCounter(0);
+    print("out_functions", "counter() = " + counter());
+    print("out_functions", "counter() = " + counter());
+    print("out_functions", "counter() = " + counter());
+  }
+</script>
+
+</body>
+</html>
